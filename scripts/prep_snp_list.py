@@ -12,7 +12,7 @@ def parse_varid(varid):
         o1.append(cc)
         o2.append(pos)
         o3.append(v)
-    return pd.DataFrame({'chr': cc, 'pos': pos, 'snp_id': v})
+    return pd.DataFrame({'chr': o1, 'pos': o2, 'snp_id': o3})
 
 if __name__ == '__main__':
     import argparse
