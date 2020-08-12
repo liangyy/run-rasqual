@@ -3,3 +3,5 @@ genotype_parquet: '/scratch/t.cri.yliang/gtexv8_genotype_in_parquet/GTEx_Analysi
 gene_model: '/gpfs/data/im-lab/nas40t2/yanyul/mv_from_scratch/repo_new/rotation-at-imlab/data/annotations_gencode_v26.tsv'
 trc_bed: '/scratch/t.cri.yliang/mixQTL-GTExV8/preprocessing/prepare_data/{tissue}/total_count.bed.gz'
 covariate: '/scratch/t.cri.yliang/mixQTL-GTExV8/preprocessing/prepare_data/{tissue}/covariates.txt.gz'
+
+rasqual_vcf: 'output/rasqual_{tissue}.chr1.vcf.gz'

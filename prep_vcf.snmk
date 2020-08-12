@@ -11,7 +11,7 @@ tissue_str_dict[config['tissue']] = config['tissue_str']
 
 rule all:
     input:
-        [ '{outdir}/rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(chr_num=i, **config) for in range(1, 23) ]
+        [ '{outdir}/rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(chr_num=i, **config) for i in range(1, 23) ]
 
 rule prep_vcf:
     input:
@@ -21,14 +21,15 @@ rule prep_vcf:
     params:
         asc_prefix,
         asc_suffix,
-        lambda wildcards: tissue_str_dict[wildcards.tissue]
+        lambda wildcards: tissue_str_dict[wildcards.tissue],
+        '{outdir}/rasqual_{tissue}.chr'
     output:
-        [ '{{outdir}}/rasqual_{{tissue}}.chr{chr_num}.vcf.gz'.format(chr_num=i) for in range(1, 23) ]
+        [ '{{outdir}}/rasqual_{{tissue}}.chr{chr_num}.vcf.gz'.format(chr_num=i) for i in range(1, 23) ]
     shell:
         'python scripts/prep_vcf.py \
         --asc_prefix {asc_prefix} \
         --asc_suffix {asc_suffix} \
         --sample_meta_data {input[0]} "{params[2]}" \
         --genotype_parquet {config[genotype_parquet]} \
-        --output {output[0]}'
+        --output {params[3]}{{chr_num}}.vcf.gz'
     

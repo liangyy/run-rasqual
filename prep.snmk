@@ -10,7 +10,8 @@ rule all:
 rule prep:
     input:
         config['trc_bed'],
-        config['covariate']
+        config['covariate'],
+        config['rasqual_vcf']
     output:
         '{outdir}/trc.{tissue}.bin',
         '{outdir}/sf.{tissue}.bin',
@@ -19,6 +20,7 @@ rule prep:
         'Rscript scripts/prep.R \
             --trc {input[0]} \
             --covar {input[1]} \
+            --indiv_list {input[2]} \
             --outdir {wildcards.outdir} \
             --output_trc_prefix trc.{wildcards.tissue} \
             --output_sf_prefix sf.{wildcards.tissue} \

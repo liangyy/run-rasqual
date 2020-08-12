@@ -7,6 +7,9 @@ option_list <- list(
     make_option(c("-c", "--covar"), type="character", default=NULL,
                 help="covariate",
                 metavar="character"),
+    make_option(c("-i", "--indiv_list"), type="character", default=NULL,
+                help="the list of individual id. it defines the order. (read header of vcf)",
+                metavar="character"),
     make_option(c("-d", "--outdir"), type="character", default=NULL,
                 help="directory of output",
                 metavar="character"),
@@ -33,8 +36,18 @@ is_match = function(str, pat) {
   return(!is.na(tmp))
 }
 
+load_header = function(vcf) {
+  e = fread(cmd = paste0('zcat < ', vcf, ' | head -n 2')) 
+  colnames(e)[-(1:9)]
+}
+
+
+
+indiv_list = load_header(opt$indiv_list)
+
 trc = fread(cmd = paste0('zcat ', opt$trc), header = T, sep = '\t')
 trc_mat = trc[, c(-1, -2, -3, -4)]
+trc_mat = trc_mat[, indiv_list]
 trc_mat = as.matrix(trc_mat)
 rownames(trc_mat) = trc[, 4]
 name_tag = strsplit(opt$output_trc_prefix, '\\.')[[1]]
