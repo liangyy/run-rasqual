@@ -24,16 +24,16 @@ def gen_gene_index_dict(trc):
     cmd = f'cat {trc} | cut -f 1'
     res = cmdline(cmd)
     res = res.split('\n')
-    return { gene_index_dict[i] = idx for idx, i in enumerate(res) }
+    return { i: idx + 1 for idx, i in enumerate(res) }
 
 def get_sample_size(trc):
     cmd = "cat " + trc + " |head -n 1|awk '{print NF}'"
     res = cmdline(cmd)
-    return int(res.split('\n')[0])
+    return int(res.split('\n')[0]) - 1  # substract the gene name column
 
 def load_rasqual_output(filename):
     header = [ "Feature_ID" ,"rs_ID" ,"Chromosome" ,"SNP_position" ,"Ref_allele" ,"Alt_allele" ,"Allele_frequency_not_MAF" ,"HWE_Chi-square_statistic" ,"Imputation_quality_score_IA" ,"Log_10_Benjamini-Hochberg_Q-value" ,"Chi_square_statistic_2_x_log_Likelihood_ratio" ,"Effect_size_Pi" ,"Sequencing_mapping_error_rate_Delta" ,"Reference_allele_mapping_bias_Phi" ,"Overdispersion" ,"SNP_ID_within_the_region" ,"No_of_feature_SNPs" ,"No_of_tested_SNPs" ,"No_of_iterations_for_null_hypothesis" ,"No_of_iterations_for_alternative_hypothesis" ,"Random_location_of_ties_tie_lead_SNP;_only_useful_with_-t_option" ,"Log_likelihood_of_the_null_hypothesis" ,"Convergence_status_0success" ,"Squared_correlation_between_prior_and_posterior_genotypes_fSNPs" ,"Squared_correlation_between_prior_and_posterior_genotypes_rSNP" ]
-    df = pd.read_csv(filname, header=None, sep='\t')
+    df = pd.read_csv(filename, header=None, sep='\t')
     df.columns = header
     return df
 
@@ -92,6 +92,8 @@ if __name__ == '__main__':
     
     df_all = []
     for i in range(df_gene.shape[0]):
+        if i > 3:
+            break
         gene_name = df_gene.iloc[i, 0]
         chr_ = df_gene.iloc[i, 1]
         strand = df_gene.iloc[i, 2]

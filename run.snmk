@@ -25,7 +25,7 @@ rule run:
         '{outdir}/rasqual_output.{tissue}.chr{chr_num}.parquet'
     shell:
         'python scripts/call_rasqual.py \
-        --gene_trc {input5} \
+        --gene_trc {input[5]} \
         --rasqual_vcf {input[0]} \
         --gene_metainfo {input[1]} \
         --output {output[0]} \
