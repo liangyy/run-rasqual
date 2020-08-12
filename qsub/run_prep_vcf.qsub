@@ -1,0 +1,17 @@
+#PBS -S /bin/bash
+#PBS -l walltime=48:00:00
+#PBS -l mem=64gb
+#PBS -e logs/run_prep_vcf-${MYCONF}.err
+#PBS -o logs/run_prep_vcf-${MYCONF}.out
+
+
+source ~/.bash_profile
+source ~/.bashrc
+cd ${PBS_O_WORKDIR}
+cd ../
+
+conda activate rasqual
+
+SNMK=/gpfs/data/im-lab/nas40t2/yanyul/softwares/miniconda2/envs/mixqtl/bin/snakemake
+
+$SNMK -s prep_vcf.snmk --configfile qsub/config.${MYCONF}.yaml -p > logs/run_prep_vcf-${MYCONF}.log

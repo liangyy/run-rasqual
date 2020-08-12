@@ -114,7 +114,7 @@ if __name__ == '__main__':
     )
     
     if args.chrs is None:
-        args.chrs = [ i for i in range(1, 23) ]
+        args.chrs = [ i for i in range(22, 0, -1) ]
     
     logging.info('Loading samples')
     df_sample = pd.read_csv(args.sample_meta_data[0], sep='\t')
