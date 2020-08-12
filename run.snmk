@@ -1,0 +1,38 @@
+if 'outdir' not in config:
+    config['outdir'] = 'output'
+
+'''
+# dependency on CRI (since we call tabix):
+module load gcc/6.2.0
+module load htslib/1.10.2
+'''
+
+rule all:
+    input:
+        '{outdir}/rasqual_output.{tissue}.chr{chr_num}.parquet'.format(**config)
+
+rule run:
+    input:
+        config['rasqual_vcf'],
+        config['gene_metainfo'],
+        config['trc_bin'],
+        config['offset_bin'],
+        config['covar_bin'],
+        config['trc_txt']
+    threads:
+        config['nthread']
+    output:
+        '{outdir}/rasqual_output.{tissue}.chr{chr_num}.parquet'
+    shell:
+        'python scripts/call_rasqual.py \
+        --gene_trc {input5} \
+        --rasqual_vcf {input[0]} \
+        --gene_metainfo {input[1]} \
+        --output {output[0]} \
+        --rasqual_exe {config[rasqual_exe]} \
+        --nthread {threads} \
+        --cis_window_size {config[cis_window_size]} \
+        --trc_bin {input[2]} \
+        --offset_bin {input[3]} \
+        --covar_bin {input[4]}'
+        
