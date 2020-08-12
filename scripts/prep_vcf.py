@@ -120,7 +120,7 @@ if __name__ == '__main__':
     df_sample = pd.read_csv(args.sample_meta_data[0], sep='\t')
     df_sample = df_sample[ (df_sample['SMTSD'] == args.sample_meta_data[1]) & ~df_sample['SMMPPD'].isna() ].reset_index(drop=True)
     sample_id_list = df_sample['SAMPID'].unique().tolist()
-    sample_id_list = sample_list_filter_out_non_asc(sample_id_list, args.asc_prefix, args.asc_suffix)[:30]
+    sample_id_list = sample_list_filter_out_non_asc(sample_id_list, args.asc_prefix, args.asc_suffix)
     indiv_id_list = sample2indiv(sample_id_list)
     if len(sample_id_list) != len(indiv_id_list):
         raise ValueError('Duplicated individual ID.')

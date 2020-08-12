@@ -3,3 +3,4 @@ sample_meta_data: '/gpfs/data/gtex-group/v8/63507/gtex/exchange/GTEx_phs000424/e
 tissue_str: 'Whole Blood'
 tissue: 'Whole_Blood'
 genotype_parquet: '/scratch/t.cri.yliang/gtexv8_genotype_in_parquet/GTEx_Analysis_2017-06-05_v8_WholeGenomeSeq_838Indiv_Analysis_Freeze.SHAPEIT2_phased.MAF01.chr{chr_num}.hap{hap_num}.parquet'
+outdir: '/scratch/t.cri.yliang/run-rasqual-results/'

@@ -12,6 +12,8 @@ cd ../
 
 conda activate rasqual
 
+mkdir -p qsub/logs
+
 SNMK=/gpfs/data/im-lab/nas40t2/yanyul/softwares/miniconda2/envs/mixqtl/bin/snakemake
 
-$SNMK -s prep_vcf.snmk --configfile qsub/config.${MYCONF}.yaml -p > logs/run_prep_vcf-${MYCONF}.log
+$SNMK -s prep_vcf.snmk --configfile qsub/config.${MYCONF}.yaml -p > qsub/logs/run_prep_vcf-${MYCONF}.log
