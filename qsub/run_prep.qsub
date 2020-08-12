@@ -1,0 +1,19 @@
+#PBS -S /bin/bash
+#PBS -l walltime=48:00:00
+#PBS -l mem=16gb
+#PBS -e logs/run_prep-${MYCONF}-chr${CHR_NUM}.err
+#PBS -o logs/run_prep-${MYCONF}-chr${CHR_NUM}.out
+
+
+source ~/.bash_profile
+source ~/.bashrc
+cd ${PBS_O_WORKDIR}
+cd ../
+
+conda activate rasqual
+
+mkdir -p qsub/logs
+
+SNMK=/gpfs/data/im-lab/nas40t2/yanyul/softwares/miniconda2/envs/mixqtl/bin/snakemake
+
+$SNMK -s prep.snmk --configfile qsub/config.${MYCONF}.yaml -p --config chr_num=${CHR_NUM} > qsub/logs/run_prep-${MYCONF}-chr${CHR_NUM}.log
