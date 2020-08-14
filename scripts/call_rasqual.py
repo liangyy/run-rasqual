@@ -139,7 +139,7 @@ if __name__ == '__main__':
         df_this = load_rasqual_output(args.output + f'{gene_name}.temp')
         df_all.append(df_this)
     df_all = pd.concat(df_all, axis=0)
-    
+    df_all = df_all.astype({'Chromosome': str}) 
     df_all.to_parquet(args.output)
         
             

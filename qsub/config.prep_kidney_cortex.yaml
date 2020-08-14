@@ -1,0 +1,10 @@
+cis_window_size: 1000000
+genotype_parquet: '/scratch/t.cri.yliang/gtexv8_genotype_in_parquet/GTEx_Analysis_2017-06-05_v8_WholeGenomeSeq_838Indiv_Analysis_Freeze.SHAPEIT2_phased.MAF01.chr{chr_num}.hap1.parquet'
+gene_model: '/gpfs/data/im-lab/nas40t2/yanyul/mv_from_scratch/repo_new/rotation-at-imlab/data/annotations_gencode_v26.tsv'
+trc_bed: '/scratch/t.cri.yliang/mixQTL-GTExV8/preprocessing/prepare_data/{tissue}/total_count.bed.gz'
+covariate: '/scratch/t.cri.yliang/mixQTL-GTExV8/preprocessing/prepare_data/{tissue}/covariates.txt.gz'
+
+rasqual_vcf: '/scratch/t.cri.yliang/run-rasqual-results/kidney_cortex/rasqual_{tissue}.chr22.vcf.gz'
+tissue: 'Kidney_Cortex'
+
+outdir: '/scratch/t.cri.yliang/run-rasqual-results/kidney_cortex'

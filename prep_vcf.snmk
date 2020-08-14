@@ -11,11 +11,12 @@ tissue_str_dict[config['tissue']] = config['tissue_str']
 
 rule all:
     input:
-        [ '{outdir}/rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(chr_num=i, **config) for i in range(1, 23) ]
+        [ '{outdir}/bgz_rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(chr_num=i, **config) for i in range(1, 23) ]
 
-rule all_tbi:
-    input:
-        '{outdir}/rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(**config)
+if 'chr_num' in config:
+    rule all_tbi:
+        input:
+            '{outdir}/bgz_rasqual_{tissue}.chr{chr_num}.vcf.gz'.format(**config)
 
 rule prep_vcf:
     input:

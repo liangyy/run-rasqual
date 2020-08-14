@@ -1,0 +1,15 @@
+tissue: 'Kidney_Cortex'
+
+rasqual_vcf: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/bgz_rasqual_{tissue}.chr{chr_num}.vcf.gz'
+gene_metainfo: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/snp_count.chr{chr_num}.txt'
+trc_bin: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/trc.{tissue}.bin'
+covar_bin: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/covar.{tissue}.bin'
+offset_bin: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/sf.{tissue}.bin'
+trc_txt: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/trc.{tissue}.txt'
+
+cis_window_size: 1000000
+nthread: 8
+rasqual_exe: '/gpfs/data/im-lab/nas40t2/yanyul/softwares/rasqual/bin/rasqual'
+
+
+outdir: '/scratch/t.cri.yliang/run-rasqual-results/kidney_cortex'

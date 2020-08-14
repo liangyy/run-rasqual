@@ -8,6 +8,10 @@
 
 source ~/.bash_profile
 source ~/.bashrc
+
+module load gcc/6.2.0
+module load htslib/1.10.2
+
 cd ${PBS_O_WORKDIR}
 cd ../
 
@@ -17,4 +21,4 @@ mkdir -p qsub/logs
 
 SNMK=/gpfs/data/im-lab/nas40t2/yanyul/softwares/miniconda2/envs/mixqtl/bin/snakemake
 
-$SNMK -s prep.snmk --configfile qsub/config.${MYCONF}.yaml -p --config chr_num=${CHR_NUM} > qsub/logs/run-${MYCONF}-chr${CHR_NUM}.log
+$SNMK -s run.snmk --configfile qsub/config.${MYCONF}.yaml -p --cores 8 --config chr_num=${CHR_NUM} > qsub/logs/run-${MYCONF}-chr${CHR_NUM}.log 2>&1

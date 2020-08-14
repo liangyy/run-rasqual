@@ -1,0 +1,6 @@
+asc_table: '/gpfs/data/im-lab/nas40t2/yanyul/ASE/GTEx_Analysis_v8_ASE_WASP_counts_by_subject/{indiv}.v8.wasp_corrected.ase_table.tsv.gz'
+sample_meta_data: '/gpfs/data/gtex-group/v8/63507/gtex/exchange/GTEx_phs000424/exchange/analysis_releases/GTEx_Analysis_2017-06-05_v8/sample_annotations/GTEx_Analysis_2017-06-05_v8_Annotations_SampleAttributesDS.txt'
+tissue_str: 'Kidney - Cortex'
+tissue: 'Kidney_Cortex'
+genotype_parquet: '/scratch/t.cri.yliang/gtexv8_genotype_in_parquet/GTEx_Analysis_2017-06-05_v8_WholeGenomeSeq_838Indiv_Analysis_Freeze.SHAPEIT2_phased.MAF01.chr{chr_num}.hap{hap_num}.parquet'
+outdir: '/scratch/t.cri.yliang/run-rasqual-results/kidney_cortex'

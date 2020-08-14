@@ -50,6 +50,9 @@ trc_mat = trc[, c(-1, -2, -3, -4)]
 trc_mat = trc_mat[, indiv_list]
 trc_mat = as.matrix(trc_mat)
 rownames(trc_mat) = trc[, 4]
+# remove constant gene
+tmp = apply(trc_mat, 1, sd)
+trc_mat = trc_mat[ tmp != 0, ]
 name_tag = strsplit(opt$output_trc_prefix, '\\.')[[1]]
 olist = list()
 olist[[name_tag[1]]] = trc_mat
