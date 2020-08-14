@@ -34,5 +34,6 @@ rule run:
         --cis_window_size {config[cis_window_size]} \
         --trc_bin {input[2]} \
         --offset_bin {input[3]} \
-        --covar_bin {input[4]}'
+        --covar_bin {input[4]} \
+        --gene_list {config[gene_list]} {config[gene_list_col]}'
         

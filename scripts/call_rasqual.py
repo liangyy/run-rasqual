@@ -42,6 +42,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog='call_rasqual.py', description='''
         Python wrapper to call RASQUAL.
     ''')
+    parser.add_argument('--gene_list', nargs='+', help='''
+        Gene list along with the column name.
+    ''')
     parser.add_argument('--gene_trc', help='''
         It is used for obtaining gene index.
     ''')
@@ -86,6 +89,8 @@ if __name__ == '__main__':
     
     df_gene = pd.read_csv(args.gene_metainfo, sep='\t')
     df_gene = df_gene[ df_gene.feature_snp_count > 0 ].reset_index(drop=True)
+    gene_list = list(pd.read_csv(args.gene_list[0], sep='\t', compression='gzip')[args.gene_list[1]])
+    df_gene = df_gene[ df_gene.gene_id.isin(gene_list) ].reset_index(drop=True)
     
     gene_index_dict = gen_gene_index_dict(args.gene_trc)
     sample_size = get_sample_size(args.gene_trc)
