@@ -103,28 +103,36 @@ if __name__ == '__main__':
         gene_name = df_gene.iloc[i, 0]
         chr_ = df_gene.iloc[i, 1]
         strand = df_gene.iloc[i, 2]
-        start = df_gene.iloc[i, 3]
-        end = df_gene.iloc[i, 4]
+        gene_start = df_gene.iloc[i, 3]
+        gene_end = df_gene.iloc[i, 4]
         nfeature = df_gene.iloc[i, 7]
         ncis = df_gene.iloc[i, 8]
         tss = int(get_tss(strand, start, end))
-        call = 'tabix {vcf} {chr_}:{start}-{end} | {rasqual_exe} \
+        cis_start = max(1, tss - args.cis_window_size)
+        cis_end = tss + args.cis_window_size
+        # take the union of cis-window and gene-body
+        region_start = min(gene_start, cis_start)
+        region_end = max(gene_end, cis_end)
+        call = 'tabix {vcf} {chr_}:{region_start}-{region_end} | {rasqual_exe} \
         -y {trc_bin} \
         -k {offset_bin} \
         -n {sample_size} \
         -j {gene_idx} \
         -l {ncis} \
         -m {nfea} \
-        -s {start_gene} \
-        -e {end_gene} \
+        -s {gene_start} \
+        -e {gene_end} \
         -f {gene_name} \
+        -c {tss} \
+        -w {cis_window} \
         --n-threads {nthread} \
+        
         -x {covar_bin} > {temp_out}'
         cmd = call.format(
             vcf=args.rasqual_vcf,
             chr_=chr_,
-            start=max(1, tss - args.cis_window_size),
-            end=tss + args.cis_window_size,
+            region_start=region_start,
+            region_end=region_end,
             rasqual_exe=args.rasqual_exe,
             trc_bin=args.trc_bin,
             offset_bin=args.offset_bin,
@@ -132,11 +140,13 @@ if __name__ == '__main__':
             gene_idx=gene_index_dict[gene_name],
             ncis=ncis,
             nfea=nfeature,
-            start_gene=start,
-            end_gene=end,
+            gene_start=gene_start,
+            gene_end=gene_end,
             gene_name=gene_name,
             nthread=args.nthread,
             covar_bin=args.covar_bin,
+            tss = tss, 
+            cis_window=args.cis_window_size
             temp_out=args.output + f'{gene_name}.temp'
         )
         if not os.path.exists(args.output + f'{gene_name}.temp'):
