@@ -18,7 +18,8 @@ rule run:
         config['trc_bin'],
         config['offset_bin'],
         config['covar_bin'],
-        config['trc_txt']
+        config['trc_txt'],
+        config['gene_list']
     threads:
         config['nthread']
     output:
@@ -35,5 +36,5 @@ rule run:
         --trc_bin {input[2]} \
         --offset_bin {input[3]} \
         --covar_bin {input[4]} \
-        --gene_list {config[gene_list]} {config[gene_list_col]}'
+        --gene_list {input[6]} {config[gene_list_col]}'
         

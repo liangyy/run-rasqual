@@ -1,7 +1,7 @@
 #PBS -S /bin/bash
 #PBS -l walltime=48:00:00
 #PBS -l mem=16gb
-#PBS -l nodes=1:ppn=9
+#PBS -l nodes=1:ppn=16
 #PBS -e logs/run-${MYCONF}-chr${CHR_NUM}.err
 #PBS -o logs/run-${MYCONF}-chr${CHR_NUM}.out
 
@@ -21,4 +21,4 @@ mkdir -p qsub/logs
 
 SNMK=/gpfs/data/im-lab/nas40t2/yanyul/softwares/miniconda2/envs/mixqtl/bin/snakemake
 
-$SNMK -s run.snmk --configfile qsub/config.${MYCONF}.yaml -p --cores 8 --config chr_num=${CHR_NUM} > qsub/logs/run-${MYCONF}-chr${CHR_NUM}.log 2>&1
+$SNMK -s run.snmk --configfile qsub/config.${MYCONF}.yaml -p --cores 16 --config chr_num=${CHR_NUM} > qsub/logs/run-${MYCONF}-chr${CHR_NUM}.log 2>&1

@@ -96,9 +96,10 @@ if __name__ == '__main__':
     sample_size = get_sample_size(args.gene_trc)
     
     df_all = []
+    logging.info('{} genes in total'.format(df_gene.shape[0]))
     for i in range(df_gene.shape[0]):
-        if i > 3:
-            break
+        # if i > 3:
+        #     break
         gene_name = df_gene.iloc[i, 0]
         chr_ = df_gene.iloc[i, 1]
         strand = df_gene.iloc[i, 2]
