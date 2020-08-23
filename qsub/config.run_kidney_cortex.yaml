@@ -13,6 +13,8 @@ gene_list_col: 'gene'
 cis_window_size: 100000
 nthread: 16
 rasqual_exe: '/gpfs/data/im-lab/nas40t2/yanyul/softwares/rasqual/bin/rasqual'
-
+extra_rasqual_cmd: 
+  - '--fix-delta'
+  - '--fix-phi'
 
 outdir: '/scratch/t.cri.yliang/run-rasqual-results/kidney_cortex'

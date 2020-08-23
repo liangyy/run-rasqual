@@ -7,6 +7,15 @@ module load gcc/6.2.0
 module load htslib/1.10.2
 '''
 
+def get_extra_cmd(config):
+    s = ''
+    if 'extra_rasqual_cmd' in config:
+        ll = config['extra_rasqual_cmd']
+        s = ' '.join(ll)
+    return s
+
+extra_cmd = get_extra_cmd(config)
+
 rule all:
     input:
         '{outdir}/rasqual_output.{tissue}.chr{chr_num}.parquet'.format(**config)
@@ -36,5 +45,6 @@ rule run:
         --trc_bin {input[2]} \
         --offset_bin {input[3]} \
         --covar_bin {input[4]} \
-        --gene_list {input[6]} {config[gene_list_col]}'
+        --gene_list {input[6]} {config[gene_list_col]} \
+        --extra_cmd "{extra_cmd}"'
         

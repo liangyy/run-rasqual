@@ -76,6 +76,9 @@ if __name__ == '__main__':
     parser.add_argument('--covar_bin', help='''
         Covariate matrix in BIN.
     ''')
+    parser.add_argument('--extra_cmd', default='', help='''
+        Add extra arguments for RASQUAL call.
+    ''')
     args = parser.parse_args()
  
     import logging, time, sys, os
@@ -126,7 +129,8 @@ if __name__ == '__main__':
         -c {tss} \
         -w {cis_window} \
         --n-threads {nthread} \
-        -x {covar_bin} > {temp_out}'
+        -x {covar_bin} \
+        {extra_cmd} > {temp_out}'
         cmd = call.format(
             vcf=args.rasqual_vcf,
             chr_=chr_,
@@ -146,7 +150,8 @@ if __name__ == '__main__':
             covar_bin=args.covar_bin,
             tss = tss, 
             cis_window=args.cis_window_size,
-            temp_out=args.output + f'{gene_name}.temp'
+            temp_out=args.output + f'{gene_name}.temp',
+            extra_cmd=args.extra_cmd
         )
         if not os.path.exists(args.output + f'{gene_name}.temp'):
             logging.info(cmd)
