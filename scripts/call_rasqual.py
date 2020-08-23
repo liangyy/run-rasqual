@@ -107,7 +107,7 @@ if __name__ == '__main__':
         gene_end = df_gene.iloc[i, 4]
         nfeature = df_gene.iloc[i, 7]
         ncis = df_gene.iloc[i, 8]
-        tss = int(get_tss(strand, start, end))
+        tss = int(get_tss(strand, gene_start, gene_end))
         cis_start = max(1, tss - args.cis_window_size)
         cis_end = tss + args.cis_window_size
         # take the union of cis-window and gene-body
@@ -126,7 +126,6 @@ if __name__ == '__main__':
         -c {tss} \
         -w {cis_window} \
         --n-threads {nthread} \
-        
         -x {covar_bin} > {temp_out}'
         cmd = call.format(
             vcf=args.rasqual_vcf,
@@ -146,7 +145,7 @@ if __name__ == '__main__':
             nthread=args.nthread,
             covar_bin=args.covar_bin,
             tss = tss, 
-            cis_window=args.cis_window_size
+            cis_window=args.cis_window_size,
             temp_out=args.output + f'{gene_name}.temp'
         )
         if not os.path.exists(args.output + f'{gene_name}.temp'):

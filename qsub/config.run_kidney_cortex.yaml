@@ -10,7 +10,7 @@ trc_txt: '/home/t.cri.yliang/scratch/run-rasqual-results/kidney_cortex/trc.{tiss
 gene_list: '/home/t.cri.yliang/scratch/mixQTL-GTExV8/mixfine/{tissue}/genes-passed-qc.txt.gz'
 gene_list_col: 'gene'
 
-cis_window_size: 500000
+cis_window_size: 100000
 nthread: 16
 rasqual_exe: '/gpfs/data/im-lab/nas40t2/yanyul/softwares/rasqual/bin/rasqual'
 
