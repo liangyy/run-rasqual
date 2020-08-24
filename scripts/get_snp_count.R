@@ -25,19 +25,43 @@ library(rasqualTools)
 library(data.table)
 options(datatable.fread.datatable = F)
 
+trim_dot = function(ss) {
+  unlist(lapply(strsplit(ss, '\\.'), function(x) { x[1] }))
+}
+
+rename_col = function(ss, col_old, col_new) {
+  if(col_old in colnames(ss)) {
+    colnames(ss)[which(col_old == colnames(ss))] = col_new
+  } 
+  ss
+}
+
+load_gene_model = function(filename, snp_chr) {
+  gene_model = fread(filename, header = T, sep = '\t')
+  if('feature_type' in colnames(gene_model)) {
+    gene_model = gene_model[ gene_model$feature_type == 'exon', ]
+    gene_model$gene_id = trim_dot(gene_model$gene_id)
+    gene_model = rename_col(gene_model, 'start_location', 'start')
+    gene_model = rename_col(gene_model, 'start_location', 'end')
+  }
+   
+  gene_model = gene_model[, c('gene_id', 'chromosome', 'strand', 'start', 'end')]
+  gene_model$chromosome = stringr::str_remove(gene_model$chromosome, 'chr')
+  tmp = rep(1, nrow(gene_model))
+  tmp[gene_model$strand == '-'] = -1
+  gene_model$strand = tmp
+  colnames(gene_model)[c(2, 4:5)] = c('chr', 'exon_starts', 'exon_ends')
+  gene_model = gene_model[ gene_model$chr %in% snp_chr, ]
+  gene_model$exon_starts = as.character(gene_model$exon_starts)
+  gene_model$exon_ends = as.character(gene_model$exon_ends)
+  gene_model$strand = as.integer(gene_model$strand)
+  
+  gene_model
+}
+
 snp_list = fread(cmd = paste0('zcat ', opt$snp_list), header = T, sep = '\t')
 snp_list$chr = as.character(snp_list$chr)
-gene_model = fread(opt$gene_model, header = T, sep = '\t')
-gene_model = gene_model[, c('gene_id', 'chromosome', 'strand', 'start', 'end')]
-gene_model$chromosome = stringr::str_remove(gene_model$chromosome, 'chr')
-tmp = rep(1, nrow(gene_model))
-tmp[gene_model$strand == '-'] = -1
-gene_model$strand = tmp
-colnames(gene_model)[c(2, 4:5)] = c('chr', 'exon_starts', 'exon_ends')
-gene_model = gene_model[ gene_model$chr %in% snp_list$chr, ]
-gene_model$exon_starts = as.character(gene_model$exon_starts)
-gene_model$exon_ends = as.character(gene_model$exon_ends)
-gene_model$strand = as.integer(gene_model$strand)
+gene_model = load_gene_model(opt$gene_model, snp_list$chr)
 snp_counts = countSnpsOverlapingExons(gene_model, snp_list, cis_window = opt$cis_window_size)
 write.table(snp_counts, opt$output, quo = F, row = F, col = T, sep = '\t')
 

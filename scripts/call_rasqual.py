@@ -10,11 +10,13 @@ def cmdline(command):
     return process.communicate()[0].decode('ascii')
 
 def get_tss(strand, s, e):
+    smin = min([ int(i) for i in s.split(',') ])
+    emax = min([ int(i) for i in e.split(',') ])
     tss = 0
     if strand == -1:
-        tss = e
+        tss = emax
     elif strand == 1:
-        tss = s
+        tss = smin
     else:
         raise ValueError('Wrong strand')
     return tss
@@ -110,7 +112,7 @@ if __name__ == '__main__':
         gene_end = df_gene.iloc[i, 4]
         nfeature = df_gene.iloc[i, 7]
         ncis = df_gene.iloc[i, 8]
-        tss = int(get_tss(strand, gene_start, gene_end))
+        tss = get_tss(strand, gene_start, gene_end)
         cis_start = max(1, tss - args.cis_window_size)
         cis_end = tss + args.cis_window_size
         # take the union of cis-window and gene-body
