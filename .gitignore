@@ -4,3 +4,4 @@ __pycache__
 logs
 .ipynb_checkpoints/
 *.gz
+*.parquet
